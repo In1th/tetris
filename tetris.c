@@ -4,12 +4,31 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
 
+#define BOARD_HEIGHT 22
+#define BOARD_WIDTH 14
+
+//$(pkg-config allegro-5 allegro_font-5 allegro_image-5 --libs --cflags)
+
 void must_init(bool test, const char *description)
 {
     if(test) return;
 
     printf("couldn't initialize %s\n", description);
     exit(1);
+}
+
+void drawBoard(int x, int y, ALLEGRO_BITMAP* bm){
+
+ int i,j;
+
+ for (i = 0; i < BOARD_HEIGHT; i++){
+    for (j = 0; j < BOARD_WIDTH; j++){
+        if ((BOARD_HEIGHT-1 == i) || (i == 0) || (j == 0) || (BOARD_WIDTH-1 == j) ){
+            al_draw_bitmap(bm, (x + 16*j), (y + 16*i), 0);
+        }
+    }
+ }
+
 }
 
 int main()
@@ -67,7 +86,9 @@ int main()
             al_clear_to_color(al_map_rgb(0, 0, 0));
             al_draw_text(font, al_map_rgb(255, 255, 255), 0, 0, 0, "Hello world!");
 
-            al_draw_bitmap(block, 100, 100, 0);
+            drawBoard(100,100, block);
+            //al_draw_bitmap(block, 100, 100, 0);
+            //al_draw_bitmap(block, 116, 100, 0);
 
             al_flip_display();
 
