@@ -1,26 +1,6 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <allegro5/allegro5.h>
-#include <allegro5/allegro_font.h>
-#include <allegro5/allegro_image.h>
-
 #include "board.c"
 
-#define BOARD_HEIGHT 22
-#define BOARD_WIDTH 14
-
-#define abs(x) x>0? x: -x
-
-//$(pkg-config allegro-5 allegro_font-5 allegro_image-5 --libs --cflags)
-
-/* Structure containing all info about a signle block
- *
- * member: pattern[4][4] - 4x4 array containing location of single block pieces in bits {0, 1}
- * member: r,g,b - contains a value of block's color in RGB
- * member: x,y - contains x and y coodrinates of the upper-left corner of the block
- *
- */
-
+//$(pkg-config allegro-5 allegro_font-5 allegro_image-5 allegro_primitives-5 --libs --cflags)
 
 int main()
 {
@@ -28,8 +8,9 @@ int main()
     must_init(al_install_keyboard(), "keyboard");
 
     ALLEGRO_TIMER* drawingTimer = al_create_timer(1.0 / 30.0);
+    ALLEGRO_TIMER* fallTimer = al_create_timer(1.25);
+    ALLEGRO_TIMER* moveTimer = al_create_timer(1.0 / 30.0);
     must_init(drawingTimer, "timer");
-    ALLEGRO_TIMER* fallTimer = al_create_timer(1.0);
     must_init(fallTimer, "timer");
 
 
@@ -56,9 +37,11 @@ int main()
     bool redraw = true;
     bool fall = false;
     ALLEGRO_EVENT event;
+    ALLEGRO_KEYBOARD_STATE ks;
 
     al_start_timer(drawingTimer);
     al_start_timer(fallTimer);
+    al_start_timer(moveTimer);
 
     unsigned char col[3] = {0,0,255};
     struct Block b = generate_block(4,1,col);
@@ -71,12 +54,31 @@ int main()
         switch(event.type)
         {
             case ALLEGRO_EVENT_TIMER:
-                // game logic goes here.
+
                 if (event.timer.source == fallTimer) fall = true;
-                if (event.timer.source == drawingTimer) redraw = true;
+                if (event.timer.source == drawingTimer) {
+                    redraw = true;
+                    
+                    al_get_keyboard_state(&ks);
+
+                    if (al_key_down(&ks, ALLEGRO_KEY_LEFT)) 
+                        b.x--;
+                    if (al_key_down(&ks, ALLEGRO_KEY_RIGHT)) 
+                        b.x++;
+                    if (al_key_down(&ks, ALLEGRO_KEY_DOWN)){
+                        fall = false;
+                        b.y++;
+                    }    
+                }
                 break;
 
             case ALLEGRO_EVENT_KEY_DOWN:
+                if (event.keyboard.keycode == ALLEGRO_KEY_SPACE){
+                    reverse(&b);
+                    break;
+                }
+                else break;
+
             case ALLEGRO_EVENT_DISPLAY_CLOSE:
                 done = true;
                 break;
@@ -111,6 +113,7 @@ int main()
     al_destroy_display(disp);
     al_destroy_timer(drawingTimer);
     al_destroy_timer(fallTimer);
+    al_destroy_timer(moveTimer);
     al_destroy_event_queue(queue);
 
     return 0;

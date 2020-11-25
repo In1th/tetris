@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
@@ -20,10 +22,12 @@
  */
 
 const char oBlock[2][2] = {{1,1},{1,1}};
-const char tBLock[3][3] = {{0,1,0},{1,1,1},{0,0,0}};
-const char lBLock[3][3] = {{0,1,0},{0,1,0},{0,1,1}};
+const char tBlock[3][3] = {{0,1,0},{1,1,1},{0,0,0}};
+const char lBlock[3][3] = {{0,1,0},{0,1,0},{0,1,1}};
+const char jBlock[3][3] = {{0,1,0},{0,1,0},{1,1,0}};
 const char iBlock[4][4] = {{0,0,1,0},{0,0,1,0},{0,0,1,0},{0,0,1,0}};
 const char sBlock[4][4] = {{0,0,0,0},{0,1,1,0},{1,1,0,0},{0,0,0,0}};
+const char zBlock[4][4] = {{0,0,0,0},{1,1,0,0},{0,1,1,0},{0,0,0,0}};
 
 struct Block
 {
@@ -40,18 +44,36 @@ int is_on_board(int x, int y){
     else return 0;
 }
 
-void reverse(struct Block b){
-    int bufor;
-
+//TODO: make this work!
+void reverse(struct Block *block){
+    char bufor;
+    char jump = (block -> n)-1;
     int i,j;
 
-    for(i = 0; i < 4; i++){
-        for (j = 0; j < 4; j++){
-            bufor = b.pattern[i][abs(j-3)];
-            b.pattern[i][abs(j-3)] = b.pattern[i][j];
-            b.pattern[i][j] = bufor;
+    for(i = 0; i < (block -> n)/2; i++){
+        for (j = 0; j < (block -> n); j++){
+            bufor = block -> pattern[i+jump][j];
+            block -> pattern[i+jump][j] = block -> pattern[i][j];
+            block -> pattern[i][j]= bufor;
         }
+        jump = jump-2;
     }
+}
+
+void rotate(struct Block *block){
+
+}
+
+int randChar(int a,int b){
+    int seed;
+    time_t tt;
+    seed = time(&tt);
+
+    srand(seed);
+
+    int number = rand();
+
+    return (number%b)+a;
 }
 
 /* Generates a Block structure from predetermined values
@@ -60,9 +82,11 @@ void reverse(struct Block b){
  *             { 
  *               0 - O-block,
  *               1 - T-block,
- *               2 - J-block/L-block,
+ *               2 - L-block,
+ *               3 - J-block,
  *               3 - I-block,
- *               4 - S-block/Z-block 
+ *               4 - S-block,
+ *               5 - Z-block 
  *             }
  * param: inverted - a boolean for triggering the inversion of the block 
  * [NOTE: has to only work with type 3 and 4 blocks]
@@ -102,7 +126,7 @@ struct Block generate_block(char type, char reversed, unsigned char colors[3]){
                 newBlock.n = 3;
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
-                        if (i < newBlock.n && j < newBlock.n) newBlock.pattern[i][j] = tBLock[i][j];
+                        if (i < newBlock.n && j < newBlock.n) newBlock.pattern[i][j] = tBlock[i][j];
                         else newBlock.pattern[i][j] = 0;
                     }
                 }
@@ -111,16 +135,16 @@ struct Block generate_block(char type, char reversed, unsigned char colors[3]){
                 newBlock.n = 3;
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
-                        if (i < newBlock.n && j < newBlock.n) newBlock.pattern[i][j] = lBLock[i][j];
+                        if (i < newBlock.n && j < newBlock.n) newBlock.pattern[i][j] = lBlock[i][j];
                         else newBlock.pattern[i][j] = 0;
                     }
                 }
             } break;
             case 3: {
-                newBlock.n = 4;
+                newBlock.n = 3;
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
-                        if (i < newBlock.n && j < newBlock.n)newBlock.pattern[i][j] = iBlock[i][j];
+                        if (i < newBlock.n && j < newBlock.n)newBlock.pattern[i][j] = jBlock[i][j];
                         else newBlock.pattern[i][j] = 0;
                     }
                 }
@@ -130,7 +154,17 @@ struct Block generate_block(char type, char reversed, unsigned char colors[3]){
                 newBlock.y--;
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
-                        if (i < newBlock.n && j < newBlock.n) newBlock.pattern[i][j] = sBlock[i][j];
+                        if (i < newBlock.n && j < newBlock.n)newBlock.pattern[i][j] = sBlock[i][j];
+                        else newBlock.pattern[i][j] = 0;
+                    }
+                }
+            } break;
+            case 5: {
+                newBlock.n = 4;
+                newBlock.y--;
+                for (i = 0; i< 4; i++){
+                    for (j = 0;j<4;j++){
+                        if (i < newBlock.n && j < newBlock.n) newBlock.pattern[i][j] = zBlock[i][j];
                         else newBlock.pattern[i][j] = 0;
                     }
                 }
@@ -147,7 +181,7 @@ struct Block generate_block(char type, char reversed, unsigned char colors[3]){
         }
 
         if (reversed == 1){
-            //reverse(newBlock);
+            reverse(&newBlock);
         }
 
     return newBlock;
@@ -161,6 +195,7 @@ void must_init(bool test, const char *description){
     exit(1);
 }
 
+//TODO: add the fallen blocks to it
 void draw_board(int x, int y, ALLEGRO_BITMAP* bm){
 
  int i,j;
