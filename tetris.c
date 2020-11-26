@@ -44,7 +44,7 @@ int main()
     al_start_timer(moveTimer);
 
     unsigned char col[3] = {0,0,255};
-    struct Block b = generate_block(4,1,col);
+    struct Block b = generate_block(randChar(0,6),randChar(0,2),col);
 
     
     while(1)
@@ -75,6 +75,10 @@ int main()
             case ALLEGRO_EVENT_KEY_DOWN:
                 if (event.keyboard.keycode == ALLEGRO_KEY_SPACE){
                     reverse(&b);
+                    break;
+                }
+                if (event.keyboard.keycode == ALLEGRO_KEY_UP){
+                    rotate(&b);
                     break;
                 }
                 else break;

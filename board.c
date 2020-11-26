@@ -22,10 +22,10 @@
  */
 
 const char oBlock[2][2] = {{1,1},{1,1}};
-const char tBlock[3][3] = {{0,1,0},{1,1,1},{0,0,0}};
+const char tBlock[3][3] = {{0,0,0},{1,1,1},{0,1,0}};
 const char lBlock[3][3] = {{0,1,0},{0,1,0},{0,1,1}};
 const char jBlock[3][3] = {{0,1,0},{0,1,0},{1,1,0}};
-const char iBlock[4][4] = {{0,0,1,0},{0,0,1,0},{0,0,1,0},{0,0,1,0}};
+const char iBlock[4][4] = {{0,0,0,0},{0,0,0,0},{1,1,1,1},{0,0,0,0}};
 const char sBlock[4][4] = {{0,0,0,0},{0,1,1,0},{1,1,0,0},{0,0,0,0}};
 const char zBlock[4][4] = {{0,0,0,0},{1,1,0,0},{0,1,1,0},{0,0,0,0}};
 
@@ -61,6 +61,24 @@ void reverse(struct Block *block){
 }
 
 void rotate(struct Block *block){
+    int n = block -> n;
+
+    char bufor[n][n];
+
+    int i,j;
+
+    for (i = 0; i < n; i++){
+        for (j = 0; j < n; j++){
+            bufor[i][j] = block -> pattern[i][j];
+        }
+    }
+
+
+    for (i = 0; i < n; i++){
+        for (j = 0; j < n; j++){
+            block -> pattern[i][j] = bufor[j][n-(i+1)];
+        }
+    }
 
 }
 
@@ -114,6 +132,8 @@ struct Block generate_block(char type, char reversed, unsigned char colors[3]){
         switch (type){
             case 0: {
                 newBlock.n = 2;
+                newBlock.x++;
+                newBlock.y++;
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
                         if (i < newBlock.n && j < newBlock.n) newBlock.pattern[i][j] = oBlock[i][j];
@@ -151,7 +171,6 @@ struct Block generate_block(char type, char reversed, unsigned char colors[3]){
             } break;
             case 4: {
                 newBlock.n = 4;
-                newBlock.y--;
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
                         if (i < newBlock.n && j < newBlock.n)newBlock.pattern[i][j] = sBlock[i][j];
@@ -161,7 +180,6 @@ struct Block generate_block(char type, char reversed, unsigned char colors[3]){
             } break;
             case 5: {
                 newBlock.n = 4;
-                newBlock.y--;
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
                         if (i < newBlock.n && j < newBlock.n) newBlock.pattern[i][j] = zBlock[i][j];
@@ -171,7 +189,6 @@ struct Block generate_block(char type, char reversed, unsigned char colors[3]){
             } break;
             default: {
                 printf("Invalid block type!\n");
-                newBlock.n = 0;
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
                         newBlock.pattern[i][j] = 0;
