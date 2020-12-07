@@ -20,7 +20,7 @@
 /* Structure containing all info about a signle block
  *
  * member: pattern[4][4] - 4x4 array containing location of single block pieces in bits {0, 1}
- * member: n = character containing used space of pattern array
+ * member: n - character containing used space of pattern array
  * member: r,g,b - contains a value of block's color in RGB
  * member: x,y - contains x and y coodrinates of the upper-left corner of the block
  *
