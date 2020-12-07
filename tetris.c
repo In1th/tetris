@@ -1,6 +1,28 @@
 #include "board.c"
+#include "block.c"
 
 //$(pkg-config allegro-5 allegro_font-5 allegro_image-5 allegro_primitives-5 --libs --cflags)
+
+
+int randChar(int a,int b){
+    int seed;
+    time_t tt;
+    seed = time(&tt);
+
+    srand(seed);
+
+    int number = rand();
+
+    return (number%b)+a;
+}
+
+
+void must_init(bool test, const char *description){
+    if(test) return;
+
+    printf("couldn't initialize %s\n", description);
+    exit(1);
+}
 
 int main()
 {
@@ -43,8 +65,11 @@ int main()
     al_start_timer(fallTimer);
     al_start_timer(moveTimer);
 
-    unsigned char col[3] = {0,0,255};
-    struct Block b = generate_block(randChar(0,6),randChar(0,2),col);
+    struct Display dis;
+    dis.current_block = generate_block(randChar(0,6),randChar(0,2),RED);
+    setup_board(&dis);
+    dis.board_x = 100;
+    dis.board_y = 100;
 
     
     while(1)
@@ -61,24 +86,30 @@ int main()
                     
                     al_get_keyboard_state(&ks);
 
-                    if (al_key_down(&ks, ALLEGRO_KEY_LEFT)) 
-                        b.x--;
-                    if (al_key_down(&ks, ALLEGRO_KEY_RIGHT)) 
-                        b.x++;
+                    if (al_key_down(&ks, ALLEGRO_KEY_LEFT)) {
+                        if (detect_collision(&dis,-1,0) == 0)
+                            dis.current_block.x--;
+                    }
+                    if (al_key_down(&ks, ALLEGRO_KEY_RIGHT)) {
+                        if (detect_collision(&dis,1,0) == 0)
+                            dis.current_block.x++;
+                    }
                     if (al_key_down(&ks, ALLEGRO_KEY_DOWN)){
+                        if (detect_collision(&dis,0,1) == 0){
                         fall = false;
-                        b.y++;
+                        dis.current_block.y++;
+                    }
                     }    
                 }
                 break;
 
             case ALLEGRO_EVENT_KEY_DOWN:
                 if (event.keyboard.keycode == ALLEGRO_KEY_SPACE){
-                    reverse(&b);
+                    reverse(&dis.current_block);
                     break;
                 }
                 if (event.keyboard.keycode == ALLEGRO_KEY_UP){
-                    rotate(&b);
+                    rotate(&dis.current_block);
                     break;
                 }
                 else break;
@@ -92,7 +123,7 @@ int main()
             break;
 
         if(fall){
-            b.y++;
+            dis.current_block.y++;
             fall = false;
         }
 
@@ -101,8 +132,8 @@ int main()
             al_clear_to_color(al_map_rgb(0, 0, 0));
             al_draw_text(font, al_map_rgb(255, 255, 255), 0, 0, 0, "TETRIS MODAFUKA!");
 
-            draw_board(100,100, block);
-            draw_block(100,100, b, block);
+            draw_board(&dis);
+            draw_block(&dis, 1);
             //al_draw_bitmap(block, 100, 100, 0);
             //al_draw_bitmap(block, 116, 100, 0);
 
