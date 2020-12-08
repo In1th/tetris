@@ -123,7 +123,8 @@ int main()
             break;
 
         if(fall){
-            dis.current_block.y++;
+            if (detect_collision(&dis,0,1) == 0) 
+                dis.current_block.y++;
             fall = false;
         }
 

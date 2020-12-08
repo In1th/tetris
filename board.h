@@ -25,13 +25,14 @@ struct BoardBlock{
  */
 struct Statistics{
     char value;
-    char x,y;
+    int x,y;
 };
 
 /* structure containing information, that's going to be displayed or to be used in other functions
  *
  * member: board - BOARD_HEIGHT X BOARD_WIDTH array of blocks [not the block that player is controlling]
  * member: board_x, board_y: x,y coordinates of upper-left corner of the board
+ * member: game_type - type of the game
  * member: stats - array of Statistics structs used in
  *                 a) gameA as:
  *                  a.1) level <1,20>
@@ -47,8 +48,9 @@ struct Statistics{
  */
 struct Display{
     struct BoardBlock board[BOARD_HEIGHT][BOARD_WIDTH];
-    char board_x, board_y;
+    int board_x, board_y;
 
+    char game_type;
     struct Statistics stats[3]; 
 
     struct Block current_block, next_block;
@@ -74,12 +76,24 @@ void draw_block(struct Display *disp, char is_on_board);
  */
 void draw_board(struct Display *disp);
 
+/* places fallen block on board
+ *
+ * param: *disp - pointer to a Display struct
+ */
+void places_block(struct Display *disp);
+
+/* puts next block on the line
+ *
+ * param: *disp - pointer to a Display struct
+ */
+void push_next_block(struct Display *disp);
+
 /* detects, if there is a collision with the board blocks, when we move the current_block by dx in x axis and by dy in y axis
  *
  * param: *disp - pointer to a Display struct
  * param: dx, dy: parameters of how we are moving the block {-1,0,1}
  */
-char detect_collision(struct Display *disp, char dx,int dy);
+char detect_collision(struct Display *disp, int dx,int dy);
 
 
 #endif

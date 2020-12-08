@@ -40,7 +40,7 @@ void draw_board(struct Display *disp){
 }
 
 void draw_block(struct Display *disp, char is_on_board){
-    int i,j;
+    char i,j;
 
     struct Block block;
 
@@ -61,7 +61,8 @@ void draw_block(struct Display *disp, char is_on_board){
     }
 }
 
-char detect_collision(struct Display *disp, char dx, int dy){
+//TODO: collision for rotate and reversed blocks
+char detect_collision(struct Display *disp, int dx, int dy){
     int i,j;
 
     int x = disp -> current_block.x;
@@ -69,7 +70,7 @@ char detect_collision(struct Display *disp, char dx, int dy){
 
     for (i = 0; i< (disp -> current_block.n); i++){
         for (j = 0; j< (disp -> current_block.n); j++){
-            if (((disp -> board[y+dy+i][x+dx+j].active) == 1)  && ((disp -> current_block.pattern[y+i][x+j]) == 1 ))
+            if (((disp -> board[y+dy+i][x+dx+j].active) == 1)  && ((disp -> current_block.pattern[i][j]) == 1 ))
                 return 1;
         }
     }
