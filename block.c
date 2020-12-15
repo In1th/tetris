@@ -9,8 +9,19 @@ static const char iBlock[4][4] = {{0,0,0,0},{0,0,0,0},{1,1,1,1},{0,0,0,0}};
 static const char sBlock[4][4] = {{0,0,0,0},{0,1,1,0},{1,1,0,0},{0,0,0,0}};
 static const char zBlock[4][4] = {{0,0,0,0},{1,1,0,0},{0,1,1,0},{0,0,0,0}};
 
-struct Block generate_block(char type, char reversed, ALLEGRO_COLOR col){
+int randChar(int a,int b){
+
+    srand(time(NULL));
+
+    int number = rand();
+
+    return (number%b)+a;
+}
+
+struct Block generate_block(ALLEGRO_COLOR col){
     struct Block newBlock;
+
+    char type = randChar(0,7);
 
     int i, j;
 
@@ -64,12 +75,21 @@ struct Block generate_block(char type, char reversed, ALLEGRO_COLOR col){
                 newBlock.n = 4;
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
-                        if (i < newBlock.n && j < newBlock.n)newBlock.pattern[i][j] = sBlock[i][j];
+                        if (i < newBlock.n && j < newBlock.n)newBlock.pattern[i][j] = iBlock[i][j];
                         else newBlock.pattern[i][j] = 0;
                     }
                 }
             } break;
             case 5: {
+                newBlock.n = 4;
+                for (i = 0; i< 4; i++){
+                    for (j = 0;j<4;j++){
+                        if (i < newBlock.n && j < newBlock.n)newBlock.pattern[i][j] = sBlock[i][j];
+                        else newBlock.pattern[i][j] = 0;
+                    }
+                }
+            } break;
+            case 6: {
                 newBlock.n = 4;
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
@@ -86,10 +106,6 @@ struct Block generate_block(char type, char reversed, ALLEGRO_COLOR col){
                     }
                 }
             }
-        }
-
-        if (reversed == 1){
-            reverse(&newBlock);
         }
 
     return newBlock;

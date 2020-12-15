@@ -12,11 +12,6 @@
 
 //$(pkg-config allegro-5 allegro_font-5 allegro_image-5 --libs --cflags)
 
-#define GREY al_map_rgb(211,211,211)
-#define RED al_map_rgb(255,0,0)
-#define GREEN al_map_rgb(0,255,0)
-#define BLUE al_map_rgb(0,0,255)
-
 /* Structure containing all info about a signle block
  *
  * member: pattern[4][4] - 4x4 array containing location of single block pieces in bits {0, 1}
@@ -33,6 +28,8 @@ struct Block
     int x,y;
 };
 
+int randChar(int a,int b);
+
 /* Generates a Block structure from predetermined values
  *
  * param: type - type of the block that has to be generated
@@ -41,16 +38,16 @@ struct Block
  *               1 - T-block,
  *               2 - L-block,
  *               3 - J-block,
- *               3 - I-block,
- *               4 - S-block,
- *               5 - Z-block 
+ *               4 - I-block,
+ *               5 - S-block,
+ *               6 - Z-block 
  *             }
  * param: inverted - a boolean for triggering the inversion of the block 
  * param: col - RBG value of the color for the block 
  *
  * returns: fully initialised BLock structure 
  */
-struct Block generate_block(char type, char reversed, ALLEGRO_COLOR col);
+struct Block generate_block(ALLEGRO_COLOR col);
 
 /* Reverses given block
  *

@@ -80,7 +80,7 @@ void draw_board(struct Display *disp);
  *
  * param: *disp - pointer to a Display struct
  */
-void places_block(struct Display *disp);
+void place_block(struct Display *disp);
 
 /* puts next block on the line
  *
@@ -95,5 +95,23 @@ void push_next_block(struct Display *disp);
  */
 char detect_collision(struct Display *disp, int dx,int dy);
 
+/* delets given line from the board and decrements all the lines y-axis above it
+ *
+ * param: *disp - pointer to a Display struct
+ * param: line_no - line index to delete
+ *
+ * returns: true (1) or false (0) value for collision
+ */
+void delete_line(struct Display *disp, char line_no);
+
+/* checks how many lines were filled
+ *
+ * param: *disp - pointer to a Display struct
+ *
+ * returns: a number of filled lines <0,4>
+ */
+char check_for_lines(struct Display *disp);
+
+char is_game_over(struct Display *disp);
 
 #endif

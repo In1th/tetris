@@ -1,20 +1,8 @@
 #include "board.c"
 #include "block.c"
+#include "color.c"
 
 //$(pkg-config allegro-5 allegro_font-5 allegro_image-5 allegro_primitives-5 --libs --cflags)
-
-
-int randChar(int a,int b){
-    int seed;
-    time_t tt;
-    seed = time(&tt);
-
-    srand(seed);
-
-    int number = rand();
-
-    return (number%b)+a;
-}
 
 
 void must_init(bool test, const char *description){
@@ -30,10 +18,11 @@ int main()
     must_init(al_install_keyboard(), "keyboard");
 
     ALLEGRO_TIMER* drawingTimer = al_create_timer(1.0 / 30.0);
-    ALLEGRO_TIMER* fallTimer = al_create_timer(1.25);
-    ALLEGRO_TIMER* moveTimer = al_create_timer(1.0 / 30.0);
+    ALLEGRO_TIMER* fallTimer = al_create_timer(1.0 / 0.8);
+    ALLEGRO_TIMER* moveTimer = al_create_timer(1.0/15.0);
     must_init(drawingTimer, "timer");
     must_init(fallTimer, "timer");
+    must_init(moveTimer, "timer");
 
 
 
@@ -54,6 +43,7 @@ int main()
     al_register_event_source(queue, al_get_display_event_source(disp));
     al_register_event_source(queue, al_get_timer_event_source(fallTimer));
     al_register_event_source(queue, al_get_timer_event_source(drawingTimer));
+    al_register_event_source(queue, al_get_timer_event_source(moveTimer));
 
     bool done = false;
     bool redraw = true;
@@ -66,11 +56,13 @@ int main()
     al_start_timer(moveTimer);
 
     struct Display dis;
-    dis.current_block = generate_block(randChar(0,6),randChar(0,2),RED);
+    dis.current_block = generate_block(new_color());
+    dis.next_block = generate_block(new_color());
     setup_board(&dis);
     dis.board_x = 100;
     dis.board_y = 100;
 
+    char lines = 0;
     
     while(1)
     {
@@ -81,11 +73,7 @@ int main()
             case ALLEGRO_EVENT_TIMER:
 
                 if (event.timer.source == fallTimer) fall = true;
-                if (event.timer.source == drawingTimer) {
-                    redraw = true;
-                    
-                    al_get_keyboard_state(&ks);
-
+                if (event.timer.source == moveTimer){
                     if (al_key_down(&ks, ALLEGRO_KEY_LEFT)) {
                         if (detect_collision(&dis,-1,0) == 0)
                             dis.current_block.x--;
@@ -94,12 +82,23 @@ int main()
                         if (detect_collision(&dis,1,0) == 0)
                             dis.current_block.x++;
                     }
+                }
+                if (event.timer.source == drawingTimer) {
+                    redraw = true;
+                    
+                    al_get_keyboard_state(&ks);
+
                     if (al_key_down(&ks, ALLEGRO_KEY_DOWN)){
                         if (detect_collision(&dis,0,1) == 0){
                         fall = false;
                         dis.current_block.y++;
-                    }
-                    }    
+                        }
+                        else {
+                            place_block(&dis);
+                            lines += check_for_lines(&dis);
+                            push_next_block(&dis);
+                        }
+                    }  
                 }
                 break;
 
@@ -125,13 +124,20 @@ int main()
         if(fall){
             if (detect_collision(&dis,0,1) == 0) 
                 dis.current_block.y++;
+            else {
+                place_block(&dis);
+                lines += check_for_lines(&dis);
+                push_next_block(&dis);
+                if (is_game_over(&dis) == 1)
+                    break;
+            }
             fall = false;
         }
 
         if(redraw && al_is_event_queue_empty(queue))
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
-            al_draw_text(font, al_map_rgb(255, 255, 255), 0, 0, 0, "TETRIS MODAFUKA!");
+            al_draw_textf(font, al_map_rgb(255, 255, 255), 0, 0, 0, "LINES: %c",lines);
 
             draw_board(&dis);
             draw_block(&dis, 1);
