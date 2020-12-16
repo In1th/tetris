@@ -12,6 +12,7 @@
 #include "board.c"
 #include "block.c"
 #include "color.c"
+#include "core.c"
 #include "gamemodes.c"
 
 int main(){

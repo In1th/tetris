@@ -19,7 +19,16 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
 
-//$(pkg-config allegro-5 allegro_font-5 allegro_image-5 --libs --cflags)
+/* structure containing info about block on the board
+ * (not the block that player is controlling)
+ *
+ * member: active - value telling if draw function has to draw this block {0,1}
+ * member: color - RGB value of the block's color
+ */
+struct Block{
+    char active;
+    ALLEGRO_COLOR color;
+};
 
 /* Structure containing all info about a signle block
  *
