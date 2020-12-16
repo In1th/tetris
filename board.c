@@ -13,9 +13,6 @@
 
 #define BLOCK_PATH "block.png"
 
-//currently not used
-#define abs(x) x>0? x: -x
-
 //$(pkg-config allegro-5 allegro_font-5 allegro_image-5 --libs --cflags)
 
 void setup_board(struct Display *disp){
