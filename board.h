@@ -1,5 +1,5 @@
 /* Board header file
- * Version: 0.11
+ * Version: 0.12
  * Author: Mateusz Kruk
  * E-mail: krukm634@gmail.com
  *
@@ -109,13 +109,13 @@ char detect_collision(struct Display *disp, int dx,int dy);
  * param: *disp - pointer to a Display struct
  * param: dicrection: what direction the block has to rotate (0 - left, 1 - right)
  */
-char detect_collision_rotate(struct Display *disp, char direction);
+void rotate_with_collision(struct Display *disp, char direction);
 
 /* detects, if there is a collision with the board blocks, when we reverse the current_block 
  *
  * param: *disp - pointer to a Display struct
  */
-char detect_collision_reverse(struct Display *disp);
+void reverse_with_collision(struct Display *disp);
 
 /* delets given line from the board and decrements all the lines y-axis above it
  *

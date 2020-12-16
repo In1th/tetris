@@ -112,11 +112,15 @@ int main()
 
             case ALLEGRO_EVENT_KEY_DOWN:
                 if (event.keyboard.keycode == ALLEGRO_KEY_SPACE){
-                    reverse(&dis.current_block);
+                    reverse_with_collision(&dis);
                     break;
                 }
-                if (event.keyboard.keycode == ALLEGRO_KEY_UP){
-                    rotate(&dis.current_block);
+                if (event.keyboard.keycode == ALLEGRO_KEY_Z){
+                    rotate_with_collision(&dis,0);
+                    break;
+                }
+                if (event.keyboard.keycode == ALLEGRO_KEY_X){
+                    rotate_with_collision(&dis,1);
                     break;
                 }
                 else break;

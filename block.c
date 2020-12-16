@@ -1,5 +1,5 @@
 /* Block file
- * Version: 0.1
+ * Version: 0.12
  * Author: Mateusz Kruk
  * E-mail: krukm634@gmail.com
  *
@@ -135,7 +135,7 @@ void reverse(struct Tetrimino *block){
     }
 }
 
-void rotate(struct Tetrimino *block){
+void rotate(struct Tetrimino *block, char direction){
     int n = block -> n;
 
     char bufor[n][n];
@@ -148,11 +148,20 @@ void rotate(struct Tetrimino *block){
         }
     }
 
-
-    for (i = 0; i < n; i++){
-        for (j = 0; j < n; j++){
-            block -> pattern[i][j] = bufor[j][n-(i+1)];
-        }
+    if (direction == 0){
+    	for (i = 0; i < n; i++){
+        	for (j = 0; j < n; j++){
+            	block -> pattern[i][j] = bufor[j][n-(i+1)];
+        	}
+    	}
     }
+
+    else if (direction == 1){ 
+    	for (i = 0; i < n; i++){
+        	for (j = 0; j < n; j++){
+            	block -> pattern[i][j] = bufor[n-(j+1)][i];
+        	}
+    	}
+	}
 
 }

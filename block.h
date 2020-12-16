@@ -1,5 +1,5 @@
 /* Block header file
- * Version: 0.11
+ * Version: 0.12
  * Author: Mateusz Kruk
  * E-mail: krukm634@gmail.com
  *
@@ -57,14 +57,14 @@ struct Tetrimino generate_block(ALLEGRO_COLOR col);
 /* Reverses given Tetrimino
  *
  * param: *block - pointer to the Block structure
- * param: direction - what direction the block has to rotate (0 - left, 1 - right)
  */
-void reverse(struct Tetrimino *block, char direction);
+void reverse(struct Tetrimino *block);
 
 /* ROtates given Tetrimino
  *
  * param: *block - pointer to the Block structure
+ * param: direction - what direction the block has to rotate (0 - left, 1 - right)
  */
-void rotate(struct Tetrimino *block);
+void rotate(struct Tetrimino *block, char direction);
 
 #endif

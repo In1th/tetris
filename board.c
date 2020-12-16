@@ -1,5 +1,5 @@
 /* Board file
- * Version: 0.1
+ * Version: 0.12
  * Author: Mateusz Kruk
  * E-mail: krukm634@gmail.com
  *
@@ -106,6 +106,29 @@ char detect_collision(struct Display *disp, int dx, int dy){
 
     return 0;
 }
+
+void rotate_with_collision(struct Display *disp, char direction){
+    rotate(&(disp -> current_block),direction);
+
+    char is_colliding = detect_collision(disp,0,0);
+
+    if (is_colliding == 1){
+        direction = (direction+1)%2;
+        rotate(&(disp -> current_block),direction); 
+    }
+}
+
+void reverse_with_collision(struct Display *disp){
+
+    reverse(&(disp -> current_block));
+
+    char is_colliding = detect_collision(disp,0,0);
+
+    if (is_colliding == 1)
+        reverse(&(disp -> current_block)); 
+
+}
+
 
 void delete_line(struct Display *disp, char line_no){
     char checksum;
