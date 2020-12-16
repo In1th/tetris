@@ -11,6 +11,20 @@
 
 #define GAME_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#include <allegro5/allegro5.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_image.h>
+
+#include "block.h"
+#include "board.h"
+#include "color.h"
+
+void must_init(bool test, const char *description);
+
 /* That funciton operates the tittle screen and switches to different gamemodes
  * [NOTE] CURRENTLY NOT SUPPOERTED
  */
@@ -28,20 +42,18 @@ void menuB();
 
 /* That funciton operates the gameA
  * 
- * param: *display - pointer to the struct Display containing all required display info
  * param: music - music variable of the track that has to be played
  * param: start_level - selected starting level <0,9>
  */
-void gameA(struct Display *display, char music, char start_level);
+void gameA(char music, char start_level);
 
 /* That funciton operates the gameB
  * 
- * param: *display - pointer to the struct Display containing all required display info
  * param: music - music variable of the track that has to be played
  * param: start_level - selected starting level <0,9>
  * param: high - number of random blocks at the start of the game <0,5>
  */
-void gameB(struct Display *display, char music, char start_level, char high);
+void gameB(char music, char start_level, char high);
 
 /* That function operates the Game Over screen for gameA
  *
