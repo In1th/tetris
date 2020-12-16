@@ -1,3 +1,12 @@
+/* Board file
+ * Version: 0.1
+ * Author: Mateusz Kruk
+ * E-mail: krukm634@gmail.com
+ *
+ * This file contains implementation for all the functions in the board header.
+ *
+ */
+
 #include "block.h"
 #include "board.h"
 #include "color.h"
@@ -43,7 +52,7 @@ void draw_board(struct Display *disp){
 void draw_block(struct Display *disp, char is_on_board){
     char i,j;
 
-    struct Block block;
+    struct Tetrimino block;
 
      ALLEGRO_BITMAP* bm = al_load_bitmap(BLOCK_PATH);
 

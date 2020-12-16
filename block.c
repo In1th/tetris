@@ -1,3 +1,12 @@
+/* Block file
+ * Version: 0.1
+ * Author: Mateusz Kruk
+ * E-mail: krukm634@gmail.com
+ *
+ * This file contains implementation for all the functions in the block header.
+ *
+ */
+
 #include "block.h"
 
 //constant block patterns
@@ -18,8 +27,8 @@ int randChar(int a,int b){
     return (number%b)+a;
 }
 
-struct Block generate_block(ALLEGRO_COLOR col){
-    struct Block newBlock;
+struct Tetrimino generate_block(ALLEGRO_COLOR col){
+    struct Tetrimino newBlock;
 
     char type = randChar(0,7);
 
@@ -111,7 +120,7 @@ struct Block generate_block(ALLEGRO_COLOR col){
     return newBlock;
 }
 
-void reverse(struct Block *block){
+void reverse(struct Tetrimino *block){
     char bufor;
     char jump = (block -> n)-1;
     int i,j;
@@ -126,7 +135,7 @@ void reverse(struct Block *block){
     }
 }
 
-void rotate(struct Block *block){
+void rotate(struct Tetrimino *block){
     int n = block -> n;
 
     char bufor[n][n];

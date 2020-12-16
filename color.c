@@ -1,3 +1,11 @@
+/* Color file
+ * Version: 0.1
+ * Author: Mateusz Kruk
+ * E-mail: krukm634@gmail.com
+ *
+ * This file contains implementation for the functions in the color header.
+ *
+ */
 
 #include "color.h"
 

@@ -1,3 +1,12 @@
+/* COlor header file
+ * Version: 0.1
+ * Author: Mateusz Kruk
+ * E-mail: krukm634@gmail.com
+ *
+ * This header file contains definitions for functions giving the color values for other modules.
+ *
+ */
+
 #ifndef COLOR_H
 
 #define COLOR_H
@@ -19,6 +28,17 @@
 #define PURPLE al_map_rgb(255,0,255)
 #define PINK al_map_rgb(255,105,180)
 
+/* Gives a random color from a predifned color palette:
+ *					0 - RED
+ *					1 - BLUE
+ *					2 - GREEN
+ *					3 - ORANGE
+ *					4 - PINK
+ *					5 - YELLOW
+ *					6 - PURPLE
+ *
+ * returns: an ALLEGRO_COLOR struct that cointains the generated color
+ */
 struct ALLEGRO_COLOR new_color();
 
 #endif

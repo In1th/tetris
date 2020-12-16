@@ -1,3 +1,12 @@
+/* Block header file
+ * Version: 0.11
+ * Author: Mateusz Kruk
+ * E-mail: krukm634@gmail.com
+ *
+ * This header file contains definitions for functions operating on a single tetrimino.
+ *
+ */
+
 #ifndef BLOCK_H
 
 #define BLOCK_H
@@ -20,7 +29,7 @@
  * member: x,y - contains x and y coodrinates of the upper-left corner of the block
  *
  */
-struct Block
+struct Tetrimino
 {
     char pattern[4][4];
     char n;
@@ -30,10 +39,7 @@ struct Block
 
 int randChar(int a,int b);
 
-/* Generates a Block structure from predetermined values
- *
- * param: type - type of the block that has to be generated
- *             { 
+/* Generates a Tetrimino structure from predetermined values and one of those types:
  *               0 - O-block,
  *               1 - T-block,
  *               2 - L-block,
@@ -41,20 +47,24 @@ int randChar(int a,int b);
  *               4 - I-block,
  *               5 - S-block,
  *               6 - Z-block 
- *             }
- * param: inverted - a boolean for triggering the inversion of the block 
+ *
  * param: col - RBG value of the color for the block 
  *
- * returns: fully initialised BLock structure 
+ * returns: fully initialised Tetrimino structure 
  */
-struct Block generate_block(ALLEGRO_COLOR col);
+struct Tetrimino generate_block(ALLEGRO_COLOR col);
 
-/* Reverses given block
+/* Reverses given Tetrimino
+ *
+ * param: *block - pointer to the Block structure
+ * param: direction - what direction the block has to rotate (0 - left, 1 - right)
+ */
+void reverse(struct Tetrimino *block, char direction);
+
+/* ROtates given Tetrimino
  *
  * param: *block - pointer to the Block structure
  */
-void reverse(struct Block *block);
-
-void rotate(struct Block *block);
+void rotate(struct Tetrimino *block);
 
 #endif
