@@ -24,7 +24,7 @@ void gameA(char music, char start_level){
     ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
     must_init(queue, "queue");
 
-    ALLEGRO_DISPLAY* disp = al_create_display(640, 480);
+    ALLEGRO_DISPLAY* disp = al_create_display(400, 400);
     must_init(disp, "display");
 
     ALLEGRO_FONT* font = al_create_builtin_font();
@@ -55,8 +55,22 @@ void gameA(char music, char start_level){
     display -> current_block = generate_block(new_color());
     display -> next_block = generate_block(new_color());
     setup_board(display);
-    display -> board_x = 100;
-    display -> board_y = 100;
+    display -> board_x = 40;
+    display -> board_y = 40;
+
+    char text[6] = "SCORE:";
+
+    display -> stats[0].x = 280;
+    display -> stats[0].y = 40;
+    display -> stats[0].label = text;
+
+    display -> stats[1].x = 280;
+    display -> stats[1].y = 120;
+    display -> stats[0].label = text;
+
+    display -> stats[2].x = 280;
+    display -> stats[2].y = 200;
+    display -> stats[0].label = text;
 
     char lines = 0;
     
@@ -154,5 +168,56 @@ void gameA(char music, char start_level){
     al_destroy_timer(drawingTimer);
     al_destroy_timer(fallTimer);
     al_destroy_timer(moveTimer);
+    al_destroy_event_queue(queue);
+
+    //gameOverA(display);
+}
+
+void gameOverA(struct Display *display){
+	ALLEGRO_TIMER* drawingTimer = al_create_timer(1.0 / 30.0);
+    must_init(drawingTimer, "timer");
+
+    ALLEGRO_EVENT_QUEUE* queue = al_create_event_queue();
+    must_init(queue, "queue");
+
+    ALLEGRO_DISPLAY* disp = al_create_display(400, 400);
+    must_init(disp, "display");
+
+    ALLEGRO_FONT* font = al_create_builtin_font();
+    must_init(font, "font");
+
+
+    al_register_event_source(queue, al_get_keyboard_event_source());
+    al_register_event_source(queue, al_get_display_event_source(disp));
+    al_register_event_source(queue, al_get_timer_event_source(drawingTimer));
+
+    bool done = false;
+    bool redraw = true;
+    ALLEGRO_EVENT event;
+
+    while(1){
+		al_wait_for_event(queue, &event);
+
+		switch(event.type)
+        {
+            case ALLEGRO_EVENT_TIMER:
+            	redraw = true;
+            	break;
+
+            case ALLEGRO_EVENT_KEY_DOWN:
+			case ALLEGRO_EVENT_DISPLAY_CLOSE:
+                done = true;
+                break;
+
+        if (redraw){
+        	al_draw_text(font, al_map_rgb(255, 255, 255), 0, 0, 0, "GAME OVER");
+        }
+
+    }
+}
+
+    al_destroy_font(font);
+    al_destroy_display(disp);
+    al_destroy_timer(drawingTimer);
     al_destroy_event_queue(queue);
 }

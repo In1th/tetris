@@ -22,7 +22,8 @@
  * member: x,y - x,y coordinated of the upper-left corner of the statictic block
  */
 struct Statistics{
-    char value;
+	char *label;
+    int value;
     int x,y;
 };
 
@@ -60,12 +61,28 @@ struct Display{
  * param: *disp - pointer to a Display struct
  * param: is_on_board - bool value telling the function what block should it draw
  */
+//[TODO] MAKE IT DRAW THE NEXT BLOCK
 void draw_block(struct Display *disp, char is_on_board);
 
 /* draws entire board
  *
  * param: *disp - pointer to a Display struct
  */
+// [TODO] ADD NEXT BLOCK AND STATS TO IT
 void draw_board(struct Display *disp);
+
+//[TODO] EVERY FUNCTION BELOW WITH NEEDED STRUCTS AND ARGUMENTS
+
+void draw_statistic(struct Statistics *stat);
+
+void draw_tittle_screen();
+
+void draw_menu_A();
+
+void draw_menu_B();
+
+void draw_game_over_A();
+
+void draw_game_over_B();
 
 #endif

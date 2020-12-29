@@ -19,6 +19,7 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_image.h>
 
+#define WHITE al_map_rgb(255,255,255)
 #define GREY al_map_rgb(211,211,211)
 #define RED al_map_rgb(255,0,0)
 #define GREEN al_map_rgb(0,255,0)
