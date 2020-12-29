@@ -27,6 +27,7 @@ void gameA(char music, char start_level){
     ALLEGRO_DISPLAY* disp = al_create_display(400, 400);
     must_init(disp, "display");
 
+    must_init(al_init_font_addon(), "font addon");
     ALLEGRO_FONT* font = al_create_builtin_font();
     must_init(font, "font");
 
@@ -62,6 +63,7 @@ void gameA(char music, char start_level){
 
     display -> stats[0].x = 280;
     display -> stats[0].y = 40;
+    display -> stats[0].value = 0;
     display -> stats[0].label = text;
 
     display -> stats[1].x = 280;
@@ -72,8 +74,6 @@ void gameA(char music, char start_level){
     display -> stats[2].y = 200;
     display -> stats[0].label = text;
 
-    char lines = 0;
-    
     while(1)
     {
         al_wait_for_event(queue, &event);
@@ -105,7 +105,7 @@ void gameA(char music, char start_level){
                         }
                         else {
                             place_block(display);
-                            lines += check_for_lines(display);
+                            display -> stats[0].value += check_for_lines(display);
                             push_next_block(display);
                         }
                     }  
@@ -140,7 +140,7 @@ void gameA(char music, char start_level){
                 (display -> current_block.y)++;
             else {
                 place_block(display);
-                lines += check_for_lines(display);
+                display -> stats[0].value  += check_for_lines(display);
                 push_next_block(display);
                 if (is_game_over(display) == 1)
                     break;
@@ -151,7 +151,7 @@ void gameA(char music, char start_level){
         if(redraw && al_is_event_queue_empty(queue))
         {
             al_clear_to_color(al_map_rgb(0, 0, 0));
-            al_draw_text(font, al_map_rgb(255, 255, 255), 0, 0, 0, "HEWWO");
+            al_draw_textf(font, al_map_rgb(255, 255, 255), 0, 0, 0,"%s %d",text,d.stats[0].value);
 
             draw_board(display);
             draw_block(display, 1);

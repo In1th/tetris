@@ -76,7 +76,7 @@ void draw_statistic(struct Statistics *stat){
 
     char i,j;
 
-    ALLEGRO_FONT *f = al_create_builtin_font(); 
+    ALLEGRO_FONT *font = al_create_builtin_font(); 
 
     ALLEGRO_BITMAP* bm = al_load_bitmap(BLOCK_PATH);
 
@@ -87,6 +87,8 @@ void draw_statistic(struct Statistics *stat){
         }
     }
 
-    //al_draw_text(f,WHITE,stat -> x + 16, stat -> y + 16,ALLEGRO_ALIGN_CENTRE,stat -> label);
+    al_draw_textf(font,WHITE,(stat -> x) + 32, (stat -> y) + 16,0,"%s","TUTAJ");
+
+    al_destroy_font(font);
 
 }
