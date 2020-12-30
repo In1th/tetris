@@ -1,5 +1,5 @@
 /* Block header file
- * Version: 0.12
+ * Version: 0.2
  * Author: Mateusz Kruk
  * E-mail: krukm634@gmail.com
  *

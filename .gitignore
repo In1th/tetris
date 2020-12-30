@@ -1,2 +1,3 @@
 tetris
 copy_tetris.c
+block_generator.c

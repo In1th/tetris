@@ -1,5 +1,5 @@
 /* Gamemodes header file
- * Version: 0.1
+ * Version: 0.2
  * Author: Mateusz Kruk
  * E-mail: krukm634@gmail.com
  *
@@ -23,6 +23,11 @@
 #include "board.h"
 #include "color.h"
 
+/* That function makes sure that every Allegro component is succesfully initialised
+ *
+ * param: test - allegro component
+ * param: *description - description of that allegro component
+ */
 void must_init(bool test, const char *description);
 
 /* That funciton operates the tittle screen and switches to different gamemodes
@@ -59,7 +64,7 @@ void gameB(char music, char start_level, char high);
  *
  * param: *display - pointer to the struct Display containing all required display info
  */
-void gameOverA(struct Display *display);
+void gameOverA(ALLEGRO_EVENT_QUEUE* queue, struct Display *display);
 
 /* That function operates the Game Over screen for gameA
  *

@@ -1,5 +1,5 @@
 /* Board header file
- * Version: 0.14
+ * Version: 0.2
  * Author: Mateusz Kruk
  * E-mail: krukm634@gmail.com
  *
@@ -18,6 +18,7 @@
 
 /* structure containing statistics displayed in-game
  *
+ * member: *label - label of the statistic box
  * member: value - statistic value
  * member: x,y - x,y coordinated of the upper-left corner of the statictic block
  */
@@ -43,7 +44,6 @@ struct Statistics{
  *                  b.3) lines left <0,25>
  * member: current_block - Tetrimino on board that's being controlled by player
  * member: next_block - Tetrimino that's going to appear after currect_block
- * [NOTE: next_block.x and next_block.y are containing info for the draw function to draw a borded alongside the block]
  */
 struct Display{
     struct Block board[BOARD_HEIGHT][BOARD_WIDTH];
@@ -56,24 +56,26 @@ struct Display{
 
 };
 
-/* braws the block
+/* draws the block
  *
  * param: *disp - pointer to a Display struct
  * param: is_on_board - bool value telling the function what block should it draw
  */
-//[TODO] MAKE IT DRAW THE NEXT BLOCK
 void draw_block(struct Display *disp, char is_on_board);
 
 /* draws entire board
  *
  * param: *disp - pointer to a Display struct
  */
-// [TODO] ADD NEXT BLOCK AND STATS TO IT
 void draw_board(struct Display *disp);
 
-//[TODO] EVERY FUNCTION BELOW WITH NEEDED STRUCTS AND ARGUMENTS
-
+/* Draws the statistic box
+ *
+ * param: *stat - pointer to a Statistics struct
+ */
 void draw_statistic(struct Statistics *stat);
+
+//[TODO] EVERY FUNCTION BELOW WITH NEEDED STRUCTS AND ARGUMENTS
 
 void draw_tittle_screen();
 

@@ -1,5 +1,5 @@
 /* Board file
- * Version: 0.14
+ * Version: 0.2
  * Author: Mateusz Kruk
  * E-mail: krukm634@gmail.com
  *
@@ -87,7 +87,7 @@ void draw_statistic(struct Statistics *stat){
         }
     }
 
-    al_draw_textf(font,WHITE,(stat -> x) + 32, (stat -> y) + 16,0,"%s","TUTAJ");
+    al_draw_multiline_textf(font,WHITE,(stat -> x) + 16, (stat -> y) + 16,64,16,0,"%s\n%d",stat -> label,stat -> value);
 
     al_destroy_font(font);
 
