@@ -46,7 +46,7 @@ struct Tetrimino
     int x,y;
 };
 
-int randChar(int a,int b);
+char randChar(char a,char b);
 
 /* Generates a Tetrimino structure from predetermined values and one of those types:
  *               0 - O-block,

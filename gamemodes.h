@@ -73,4 +73,9 @@ void gameOverA(ALLEGRO_EVENT_QUEUE* queue, struct Display *display);
  */
 void gameOverB(struct Display *display, char *lines_count);
 
+/* That function displays credits. Indefinitley
+ *
+ */
+void credits();
+
 #endif

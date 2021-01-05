@@ -16,19 +16,17 @@ double fallDivident[21] = {53.0,49.0,45.0,41.0,37.0,33.0,28.0,22.0,17.0,11.0,10.
 
 /* TO-DO LIST:
  * 1) gameB():
- *  - make high actually do something
- *  - change statistics
  *  - make an array of lines for the game over screen
- *  - make line counter decrease
- * 2) random block generators
+ * 2) random block generators (sorta fixed)
  * 3) game over screens
  * 4) menu for both game types
  * 5) tittle screen
- * 6) music and SFX
- * 7) animations
- * 8) graphics
- * 9) code factorization
- * 10) code optimalization
+ * 6) credits
+ * 7) music and SFX
+ * 8) animations
+ * 9) graphics
+ * 10) code factorization
+ * 11) code optimalization
  *  - global block bitmap, font variables
  *
  */
@@ -44,8 +42,10 @@ void gameA(char music, char start_level){
 	must_init(al_init(), "allegro");
     must_init(al_install_keyboard(), "keyboard");
 
+    start_level = min(20,start_level);
+
     ALLEGRO_TIMER* drawingTimer = al_create_timer(1.0 / 60.0);
-    ALLEGRO_TIMER* fallTimer = al_create_timer(fallDivident[min(20,start_level)]/ 60.0);
+    ALLEGRO_TIMER* fallTimer = al_create_timer(fallDivident[start_level]/ 60.0);
     ALLEGRO_TIMER* moveTimer = al_create_timer(1.0/15.0);
     must_init(drawingTimer, "timer");
     must_init(fallTimer, "timer");
@@ -150,6 +150,11 @@ void gameA(char music, char start_level){
                             lines = check_for_lines(display);
                             change_score = true;
                             push_next_block(display);
+                            display -> stats[0].value = min(999999,display -> stats[0].value + 8);
+                            if (is_game_over(display) == 1){
+                            	done = true;
+                    			break;
+                            }
                         }
                     }  
                 }
@@ -186,6 +191,7 @@ void gameA(char music, char start_level){
                 lines = check_for_lines(display);
                 change_score = true;
                 push_next_block(display);
+                display -> stats[0].value = min(999999,display -> stats[0].value + 4);
                 if (is_game_over(display) == 1)
                     break;
             }
@@ -197,8 +203,8 @@ void gameA(char music, char start_level){
         	display -> stats[0].value = min(999999,display -> stats[0].value + multipliers[lines-1] * ((display -> stats[1].value) +1));
 
         	if (display -> stats[2].value >= 10*(display -> stats[1].value + 1)){
-        		display -> stats[1].value++;
-        		al_set_timer_speed(fallTimer,fallDivident[min(20,display -> stats[1].value)]/60.0);
+        		display -> stats[1].value = min(20,display -> stats[1].value+1);
+        		al_set_timer_speed(fallTimer,fallDivident[display -> stats[1].value]/60.0);
         	}
 
         	change_score = false;
@@ -232,8 +238,11 @@ void gameB(char music, char start_level, char high){
 	must_init(al_init(), "allegro");
     must_init(al_install_keyboard(), "keyboard");
 
+    start_level = min(20,start_level);
+    high = min(5,high);
+
     ALLEGRO_TIMER* drawingTimer = al_create_timer(1.0 / 60.0);
-    ALLEGRO_TIMER* fallTimer = al_create_timer(fallDivident[min(20,start_level)]/ 60.0);
+    ALLEGRO_TIMER* fallTimer = al_create_timer(fallDivident[start_level]/ 60.0);
     ALLEGRO_TIMER* moveTimer = al_create_timer(1.0/15.0);
     must_init(drawingTimer, "timer");
     must_init(fallTimer, "timer");
@@ -268,6 +277,7 @@ void gameB(char music, char start_level, char high){
     display -> current_block = generate_block(new_color());
     display -> next_block = generate_block(new_color());
     setup_board(display);
+    setup_high(display,high);
     display -> board_x = 40;
     display -> board_y = 40;
 
@@ -295,7 +305,7 @@ void gameB(char music, char start_level, char high){
 
     char lines;
     bool change_score = false;
-    int multipliers[4] = {40,100,300,1200};
+    char line_types[5];
 
     //GAME LOOP
     while(1)
@@ -331,6 +341,11 @@ void gameB(char music, char start_level, char high){
                             lines = check_for_lines(display);
                             change_score = true;
                             push_next_block(display);
+                            if (is_game_over(display) == 1){
+                            	done = true;
+                    			break;
+                            }
+                        
                         }
                     }  
                 }
@@ -375,6 +390,8 @@ void gameB(char music, char start_level, char high){
 
         if (change_score){
         	display -> stats[2].value = max(0,display -> stats[2].value - lines);
+
+        	line_types[lines]++;
         	
         	change_score = false;
         }
@@ -392,13 +409,15 @@ void gameB(char music, char start_level, char high){
         }
     }
 
+    printf("%d %d %d %d\n", line_types[1],line_types[2],line_types[3],line_types[4]);
+
     al_destroy_display(disp);
     al_destroy_timer(drawingTimer);
     al_destroy_timer(fallTimer);
     al_destroy_timer(moveTimer);
     al_destroy_event_queue(queue);
 
-    //gameOverA(display);
+    //gameOverB(display,line_types);
 }
 
 //MAKE THIS WORK!!!

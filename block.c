@@ -18,13 +18,11 @@ static const char iBlock[4][4] = {{0,0,0,0},{0,0,0,0},{1,1,1,1},{0,0,0,0}};
 static const char sBlock[4][4] = {{0,0,0,0},{0,1,1,0},{1,1,0,0},{0,0,0,0}};
 static const char zBlock[4][4] = {{0,0,0,0},{1,1,0,0},{0,1,1,0},{0,0,0,0}};
 
-int randChar(int a,int b){
+char randChar(char a,char b){
 
-    srand(time(NULL));
+    char number = (rand()%b)+a;
 
-    int number = rand();
-
-    return (number%b)+a;
+    return number;
 }
 
 struct Tetrimino generate_block(ALLEGRO_COLOR col){

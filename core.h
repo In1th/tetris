@@ -20,6 +20,8 @@
  */
 void setup_board(struct Display *disp);
 
+void setup_high(struct Display *disp, char high);
+
 /* places fallen block on board
  *
  * param: *disp - pointer to a Display struct

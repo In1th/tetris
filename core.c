@@ -1,4 +1,4 @@
-/* COre file
+/* Core file
  * Version: 0.14
  * Author: Mateusz Kruk
  * E-mail: krukm634@gmail.com
@@ -25,6 +25,31 @@ void setup_board(struct Display *disp){
  }
 }
 
+//TODO: MAKE THIS WORK
+void setup_high(struct Display *disp, char high){
+    char i,j, number, checksum;
+
+    for (i = BOARD_HEIGHT-2; i > BOARD_HEIGHT- 2 - 2*high; i--){
+        checksum = 9;
+        for (j = 1; j < BOARD_WIDTH-1; j++){
+            number = randChar(0,2);
+            if (number == 1 && checksum > 0){
+                disp -> board[i][j].active = 1;
+                disp -> board[i][j].color = new_color();
+                checksum--;
+            }
+            else
+                disp -> board[i][j].active = 0;
+
+        }
+
+        if (checksum > 7)
+            i++;
+
+
+    }
+}
+
 void place_block(struct Display *disp){
     char i,j;
 
@@ -40,6 +65,7 @@ void place_block(struct Display *disp){
 
 //TODO: better random generator that allows only 2 blocks in the row
 void push_next_block(struct Display *disp){
+    //free(&disp -> current_block);
     disp -> current_block = disp -> next_block;
     disp -> next_block = generate_block(new_color());
 }
