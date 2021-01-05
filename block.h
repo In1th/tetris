@@ -61,7 +61,7 @@ char randChar(char a,char b);
  *
  * returns: fully initialised Tetrimino structure 
  */
-struct Tetrimino generate_block(ALLEGRO_COLOR col);
+void generate_block(struct Tetrimino *t,ALLEGRO_COLOR col);
 
 /* Reverses given Tetrimino
  *

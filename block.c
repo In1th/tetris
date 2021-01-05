@@ -25,83 +25,82 @@ char randChar(char a,char b){
     return number;
 }
 
-struct Tetrimino generate_block(ALLEGRO_COLOR col){
-    struct Tetrimino newBlock;
+void generate_block(struct Tetrimino *t, ALLEGRO_COLOR col){
 
     char type = randChar(0,7);
 
     int i, j;
 
-    newBlock.color = col;
+    t -> color = col;
 
-    newBlock.x = 5;
-    newBlock.y = 1;
+    t -> x = 5;
+    t -> y = 1;
     
 
         switch (type){
             case 0: {
-                newBlock.n = 2;
-                newBlock.x++;
-                newBlock.y++;
+                t -> n = 2;
+                t -> x++;
+                t -> y++;
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
-                        if (i < newBlock.n && j < newBlock.n) newBlock.pattern[i][j] = oBlock[i][j];
-                        else newBlock.pattern[i][j] = 0;
+                        if (i < t -> n && j < t -> n) t -> pattern[i][j] = oBlock[i][j];
+                        else t -> pattern[i][j] = 0;
                     }
                 }
 
             } break;
             case 1: {
-                newBlock.n = 3;
+                t -> n = 3;
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
-                        if (i < newBlock.n && j < newBlock.n) newBlock.pattern[i][j] = tBlock[i][j];
-                        else newBlock.pattern[i][j] = 0;
+                        if (i < t -> n && j < t -> n) t -> pattern[i][j] = tBlock[i][j];
+                        else t -> pattern[i][j] = 0;
                     }
                 }
             } break;
             case 2: {
-                newBlock.n = 3;
+                t -> n = 3;
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
-                        if (i < newBlock.n && j < newBlock.n) newBlock.pattern[i][j] = lBlock[i][j];
-                        else newBlock.pattern[i][j] = 0;
+                        if (i < t -> n && j < t -> n) t -> pattern[i][j] = lBlock[i][j];
+                        else t -> pattern[i][j] = 0;
                     }
                 }
             } break;
             case 3: {
-                newBlock.n = 3;
+                t -> n = 3;
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
-                        if (i < newBlock.n && j < newBlock.n)newBlock.pattern[i][j] = jBlock[i][j];
-                        else newBlock.pattern[i][j] = 0;
+                        if (i < t -> n && j < t -> n)t -> pattern[i][j] = jBlock[i][j];
+                        else t -> pattern[i][j] = 0;
                     }
                 }
             } break;
             case 4: {
-                newBlock.n = 4;
+                t -> n = 4;
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
-                        if (i < newBlock.n && j < newBlock.n)newBlock.pattern[i][j] = iBlock[i][j];
-                        else newBlock.pattern[i][j] = 0;
+                        if (i < t -> n && j < t -> n)t -> pattern[i][j] = iBlock[i][j];
+                        else t -> pattern[i][j] = 0;
                     }
                 }
             } break;
             case 5: {
-                newBlock.n = 4;
+                t -> n = 4;
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
-                        if (i < newBlock.n && j < newBlock.n)newBlock.pattern[i][j] = sBlock[i][j];
-                        else newBlock.pattern[i][j] = 0;
+                        if (i < t -> n && j < t -> n)t -> pattern[i][j] = sBlock[i][j];
+                        else t -> pattern[i][j] = 0;
                     }
                 }
             } break;
             case 6: {
-                newBlock.n = 4;
+                t -> n = 4;
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
-                        if (i < newBlock.n && j < newBlock.n) newBlock.pattern[i][j] = zBlock[i][j];
-                        else newBlock.pattern[i][j] = 0;
+                        if (i < t -> n && j < t -> n) t -> pattern[i][j] = zBlock[i][j];
+                        else t -> pattern[i][j] = 0;
                     }
                 }
             } break;
@@ -109,13 +108,11 @@ struct Tetrimino generate_block(ALLEGRO_COLOR col){
                 printf("Invalid block type!\n");
                 for (i = 0; i< 4; i++){
                     for (j = 0;j<4;j++){
-                        newBlock.pattern[i][j] = 0;
+                        t -> pattern[i][j] = 0;
                     }
                 }
             }
         }
-
-    return newBlock;
 }
 
 void reverse(struct Tetrimino *block){

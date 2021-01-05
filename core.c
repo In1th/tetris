@@ -65,9 +65,16 @@ void place_block(struct Display *disp){
 
 //TODO: better random generator that allows only 2 blocks in the row
 void push_next_block(struct Display *disp){
-    //free(&disp -> current_block);
-    disp -> current_block = disp -> next_block;
-    disp -> next_block = generate_block(new_color());
+    char i,j;
+
+    disp -> current_block.n = disp -> next_block.n;
+    disp -> current_block.x = disp -> next_block.x;
+    disp -> current_block.y = disp -> next_block.y;
+    disp -> current_block.color = disp -> next_block.color;
+    for (i = 0; i < 4; i++)
+        for (j = 0; j < 4; j++)
+            disp -> current_block.pattern[i][j] = disp -> next_block.pattern[i][j];
+    generate_block(&(disp -> next_block),new_color());
 }
 
 //TODO: collision for rotate and reversed blocks

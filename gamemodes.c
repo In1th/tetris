@@ -85,8 +85,8 @@ void gameA(char music, char start_level){
     //seting up display
     struct Display d,*display = &d;
 
-    display -> current_block = generate_block(new_color());
-    display -> next_block = generate_block(new_color());
+    generate_block(&(display -> current_block),new_color());
+    generate_block(&(display -> next_block),new_color());
     setup_board(display);
     display -> board_x = 40;
     display -> board_y = 40;
@@ -274,8 +274,8 @@ void gameB(char music, char start_level, char high){
 
     struct Display d,*display = &d;
 
-    display -> current_block = generate_block(new_color());
-    display -> next_block = generate_block(new_color());
+    generate_block(&(display -> current_block),new_color());
+    generate_block(&(display -> next_block),new_color());
     setup_board(display);
     setup_high(display,high);
     display -> board_x = 40;

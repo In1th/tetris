@@ -27,7 +27,7 @@ int main(int argc, char *argv[]){
          */
         case 1:
             //tittle_screen();
-            gameB(1,0,3); //placeholrder
+            gameA(1,0); //placeholrder
             break;
         /* 1 argument 
          * [PLAYS THE CHOSEN GAMEMODE MENU OR CREDITS]
