@@ -48,6 +48,8 @@ int y = disp -> stats[2].y + 80;
         }
     }
 
+ al_destroy_bitmap(bm);
+
 }
 
 void draw_block(struct Display *disp, char is_on_board){
@@ -70,6 +72,8 @@ void draw_block(struct Display *disp, char is_on_board){
             }
         }
     }
+
+    al_destroy_bitmap(bm);
 }
 
 void draw_statistic(struct Statistics *stat){
@@ -89,6 +93,7 @@ void draw_statistic(struct Statistics *stat){
 
     al_draw_multiline_textf(font,WHITE,(stat -> x) + 16, (stat -> y) + 16,64,16,0,"%s\n%d",stat -> label,stat -> value);
 
+    al_destroy_bitmap(bm);
     al_destroy_font(font);
 
 }

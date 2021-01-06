@@ -305,7 +305,10 @@ void gameB(char music, char start_level, char high){
 
     char lines;
     bool change_score = false;
-    char line_types[5];
+    int line_types[5];
+
+    for (i = 0; i < 5; i++)
+        line_types[i] = 0;
 
     //GAME LOOP
     while(1)
@@ -341,6 +344,7 @@ void gameB(char music, char start_level, char high){
                             lines = check_for_lines(display);
                             change_score = true;
                             push_next_block(display);
+                            line_types[i] += 8;
                             if (is_game_over(display) == 1){
                             	done = true;
                     			break;
@@ -382,6 +386,7 @@ void gameB(char music, char start_level, char high){
                 lines = check_for_lines(display);
                 change_score = true;
                 push_next_block(display);
+                line_types[i] += 4;
                 if (is_game_over(display) == 1)
                     break;
             }
