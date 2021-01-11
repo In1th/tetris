@@ -23,7 +23,7 @@ int main(int argc, char *argv[]){
     must_init(disp, "display");
 
     srand(time(NULL));
-    
+
     switch (argc){
         /* no arguments 
          * [PLAYS GAME A]
@@ -55,7 +55,7 @@ int main(int argc, char *argv[]){
         case 4:
             if (strcmp(argv[1],"B") == 0){
                 char level = atoi(argv[2]), high = atoi(argv[3]);
-                gameB(disp,high,level);
+                gameB(disp,level,high);
             }
             break;
         default:
