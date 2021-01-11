@@ -6,7 +6,7 @@
 ## Description
 This project had a goal of replicating a game called Tetris as a final project for the C subject. It was trying to imitate the Gameboy Classic [version](https://en.wikipedia.org/wiki/Tetris_(Game_Boy_video_game)) from 1989, but it's not a faithful replication of that version of the game because of the lack of information about certain mechanics or different implementation of functions. The project in this version is fully operational, but in the future it's going to be expanded on new features.
 
-**[NOTE!]** THe author does not claim any rights to the Tetris game and this project is only for educational purposes. 
+**[NOTE!]** The author does not claim any rights to the Tetris game and this project is only for educational purposes. 
 
 ## Getting started
 In order to compile the code, the project requires Allegro-5 library to work. If you are using **Ubuntu 18.04+** or derivatives of it, firstly add the Allegro PPA:
@@ -17,7 +17,7 @@ Then install Allegro:
 ```
 sudo apt-get install liballegro*5.2 liballegro*5-dev
 ```  
-For other operating system please refer to the Allebro library [github page](github.com/liballeg/allegro_wiki/wiki/Quickstart).
+For other operating systems please refer to the Allebro library [github page](github.com/liballeg/allegro_wiki/wiki/Quickstart).
 
 ## Compiling
 To compile the code, you may be unable to compile it using gcc. Please make sure you are using this flag while compiling:
