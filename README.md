@@ -1,5 +1,5 @@
 # Tetris project
-### Version 1.0 
+### Version 1.0 (11.01.2021)
 ### Done by Mateusz Kruk 
 ### E-mail: krukm634@gmail.com
 
