@@ -38,8 +38,8 @@ You can choose the gamemode by typing the letter of the mode ("A" or "B") as a s
 ```
 
 Then, depending on the mode you can add additional arguments to the mode:
-	- for game A: level from [0,20]
-	- for game B: level from [0,20] and high from [0,5]
+- for game A: level from [0,20]
+- for game B: level from [0,20] and high from [0,5]
 
 ```
 ./[executeable_name] A [level]
