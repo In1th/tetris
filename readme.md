@@ -10,41 +10,41 @@ This project had a goal of replicating a game called Tetris as a final project f
 
 ## Getting started
 In order to compile the code, the project requires Allegro-5 library to work. If you are using **Ubuntu 18.04+** or derivatives of it, firstly add the Allegro PPA:
-'''
+```
 sudo add-apt-repository ppa:allegro/5.2
-'''
+```
 Then install Allegro:
-'''
+```
 sudo apt-get install liballegro*5.2 liballegro*5-dev
-'''  
+```  
 For other operating system please refer to the Allebro library [github page](github.com/liballeg/allegro_wiki/wiki/Quickstart).
 
 ## Compiling
 To compile the code, you may be unable to compile it using gcc. Please make sure you are using this flag while compiling:
-'''
+``` 
 $(pkg-config allegro-5 allegro_font-5 allegro_ttf-5 allegro_image-5 allegro_primitives-5 --libs --cflags)
-'''
+``` 
 File **tetris.c** is the main file.
 
 ## Running the code
 The project support main function arguments for opening built-in gamemodes of the game. If you are launching it without any arguments, it'll run game A with default arguments (level 0).
-'''
+``` 
 ./[executeable_name]
-'''
+``` 
 
 You can choose the gamemode by typing the letter of the mode ("A" or "B") as a second argument after the executeable name. It'll run chosen gamemodes with default values (level 0 for game A or level 0 and high 0 for game B)
-'''
+``` 
 ./[executeable_name] [gamemode]
-'''
+``` 
 
 Then, depending on the mode you can add additional arguments to the mode:
 	- for game A: level from [0,20]
 	- for game B: level from [0,20] and high from [0,5]
 
-'''
+``` 
 ./[executeable_name] A [level]
 ./[executeable_name] B [level] [high]
-'''
+``` 
 
 ## Gamemodes
 In the current version of the game there are 2 modes:
