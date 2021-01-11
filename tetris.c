@@ -23,8 +23,7 @@ int main(int argc, char *argv[]){
     must_init(disp, "display");
 
     srand(time(NULL));
-
-    //TODO: IMPLEMENT DIFFERENT GENERATOR ALGORITHMS
+    
     switch (argc){
         /* no arguments 
          * [PLAYS GAME A]
