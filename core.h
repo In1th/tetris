@@ -1,5 +1,5 @@
-/* Board header file
- * Version: 0.14
+/* Core header file
+ * Version: 1.0
  * Author: Mateusz Kruk
  * E-mail: krukm634@gmail.com
  *
@@ -20,8 +20,20 @@
  */
 void setup_board(struct Display *disp);
 
+/* generates the high for the board in gameB
+ *
+ * param: *disp - pointer to a Display struct
+ * param: high - number of lines to be generated * 2
+ */
 void setup_high(struct Display *disp, char high);
 
+/* setups the game for both modes
+ *
+ * param: *disp - pointer to a Display struct
+ * param: *mode - pointer to a string containing game mode("A" or "B")
+ * param: **labels - pointer to an array of pointers containing label strings
+ * param: values[3] - an array to the values of stats 
+ */
 void setup_game(struct Display *disp,char *mode, char **labels, int values[3]);
 
 /* places fallen block on board
@@ -81,8 +93,24 @@ char check_for_lines(struct Display *disp);
  */
 char is_game_over(struct Display *disp);
 
+/* Rotates or reverses the Tetrimino
+ *
+ * param: *disp - pointer to a Display struct
+ * param: keycode - allegro keycode for a pressed key
+ */
 void move(struct Display *disp, int keycode);
+
+/* Moves the Tetrimino left or right
+ *
+ * param: *disp - pointer to a Display struct
+ * param: direction - what direction should the block move (-1 - left, 1 - right)
+ */
 void move_horizontally(struct Display *disp, char direction);
+
+/* Moves down the Tetrimino
+ *
+ * param: *disp - pointer to a Display struct
+ */
 char move_down(struct Display *disp);
 
 #endif

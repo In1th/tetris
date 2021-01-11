@@ -1,5 +1,5 @@
 /* Tetris
- * Version: 0.2
+ * Version: 1.0
  * Author: Mateusz Kruk
  * E-mail: krukm634@gmail.com
  *
@@ -17,11 +17,7 @@
 
 int main(int argc, char *argv[]){
 
-    must_init(al_init(), "allegro");
-    must_init(al_install_keyboard(), "keyboard");
-    must_init(al_init_image_addon(), "image addon");
-    must_init(al_init_font_addon(), "font addon");
-    must_init(al_init_ttf_addon(), "font addon");
+    init();
 
     ALLEGRO_DISPLAY* disp = al_create_display(400, 400);
     must_init(disp, "display");

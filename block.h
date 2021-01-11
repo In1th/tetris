@@ -1,5 +1,5 @@
 /* Block header file
- * Version: 0.2
+ * Version: 1.0
  * Author: Mateusz Kruk
  * E-mail: krukm634@gmail.com
  *
@@ -47,9 +47,15 @@ struct Tetrimino
     int x,y;
 };
 
+/* Generates the random number from <a,b)
+ *
+ * param: a,b - the values of the range 
+ *
+ * returns: a char number
+ */
 char randChar(char a,char b);
 
-/* Generates a Tetrimino structure from predetermined values and one of those types:
+/* CHanges the value of a Tetrimino structure from predetermined values and one of those types:
  *               0 - O-block,
  *               1 - T-block,
  *               2 - L-block,
@@ -60,7 +66,6 @@ char randChar(char a,char b);
  *
  * param: col - RBG value of the color for the block 
  *
- * returns: fully initialised Tetrimino structure 
  */
 void generate_block(struct Tetrimino *t,ALLEGRO_COLOR col);
 

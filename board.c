@@ -1,5 +1,5 @@
 /* Board file
- * Version: 0.2
+ * Version: 1.0
  * Author: Mateusz Kruk
  * E-mail: krukm634@gmail.com
  *
@@ -106,7 +106,7 @@ void draw_statistic(struct Statistics *stat, char is_score){
 
 }
 
-void draw_screen(struct Display *disp, char is_game_over){
+void draw_screen(struct Display *disp){
 
     ALLEGRO_FONT *font = al_create_builtin_font();
 

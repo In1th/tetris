@@ -1,5 +1,5 @@
 /* Gamemodes file
- * Version: 0.2
+ * Version: 1.0
  * Author: Mateusz Kruk
  * E-mail: krukm634@gmail.com
  *
@@ -31,6 +31,14 @@ double fallDivident[21] = {53.0,49.0,45.0,41.0,37.0,33.0,28.0,22.0,17.0,11.0,10.
  *  - global block bitmap, font variables
  *
  */
+
+void init(){
+    must_init(al_init(), "allegro");
+    must_init(al_install_keyboard(), "keyboard");
+    must_init(al_init_image_addon(), "image addon");
+    must_init(al_init_font_addon(), "font addon");
+    must_init(al_init_ttf_addon(), "font addon");
+}
 
 void must_init(bool test, const char *description){
     if(test) return;
@@ -162,7 +170,7 @@ void gameA(ALLEGRO_DISPLAY* disp, char start_level){
             if (over)
                 draw_game_over_A(display);
             else
-                draw_screen(display,0);
+                draw_screen(display);
             redraw = false;
         }
 
@@ -299,11 +307,11 @@ void gameB(ALLEGRO_DISPLAY* disp, char start_level, char high){
         if(redraw && al_is_event_queue_empty(queue))
         {
             if (over == 1)
-                draw_game_over_B(display,line_types,1);
+                draw_game_over_B(display,line_types,0);
             else if (over == 2)
                 draw_game_over_B(display,line_types,1);
             else
-                draw_screen(display,0);
+                draw_screen(display);
             redraw = false;
         }
     }

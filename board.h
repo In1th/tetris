@@ -1,5 +1,5 @@
 /* Board header file
- * Version: 0.2
+ * Version: 1.0
  * Author: Mateusz Kruk
  * E-mail: krukm634@gmail.com
  *
@@ -40,8 +40,8 @@ struct Statistics{
  *                  a.2) score <0,999999>
  *                  a.3) lines completed <0,+inf]
  *                 b) gameB as:
- *                  b.1) level <1,20>
- *                  b.2) high <0,5>
+ *					b.1) high <0,5>
+ *                  b.2) level <1,20>
  *                  b.3) lines left <0,25>
  * member: current_block - Tetrimino on board that's being controlled by player
  * member: next_block - Tetrimino that's going to appear after currect_block
@@ -73,16 +73,34 @@ void draw_board(struct Display *disp);
 /* Draws the statistic box
  *
  * param: *stat - pointer to a Statistics struct
+ * param: is_score - a bool value if stats[0] holds a value for score
  */
 void draw_statistic(struct Statistics *stat,char is_score);
 
-void draw_screen(struct Display *disp, char is_game_over);
+/* draws game screen
+ *
+ * param: *disp - pointer to a Display struct
+ */
+void draw_screen(struct Display *disp);
 
-//[TODO] EVERY FUNCTION BELOW WITH NEEDED STRUCTS AND ARGUMENTS
-
+/* draws game screen but without the placed blocks
+ *
+ * param: *disp - pointer to a Display struct
+ */
 void draw_border(struct Display *disp);
+
+/* draws game over screen for gameA
+ *
+ * param: *disp - pointer to a Display struct
+ */
 void draw_game_over_A(struct Display *disp);
 
+/* draws game over screen for gameB
+ *
+ * param: *disp - pointer to a Display struct
+ * param: *lines - pointer to an array contaiting line types values
+ * param: success - bool value if the player cleared 25 lines
+ */
 void draw_game_over_B(struct Display *disp,int *lines, char success);
 
 #endif

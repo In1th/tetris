@@ -1,5 +1,5 @@
 /* Core file
- * Version: 0.14
+ * Version: 1.0
  * Author: Mateusz Kruk
  * E-mail: krukm634@gmail.com
  *
