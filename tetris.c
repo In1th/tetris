@@ -56,7 +56,7 @@ int main(int argc, char *argv[]){
         case 4:
             if (strcmp(argv[1],"B") == 0){
                 char level = atoi(argv[2]), high = atoi(argv[3]);
-                gameB(disp,level,high);
+                gameB(disp,high,level);
             }
             break;
         default:
