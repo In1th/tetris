@@ -12,6 +12,9 @@
 void setup_board(struct Display *disp){
     char i,j;
 
+    disp -> board_x = 20;
+    disp -> board_y = 20;
+
     for (i = 0; i < BOARD_HEIGHT; i++){
         for (j = 0; j < BOARD_WIDTH; j++){
             if ((BOARD_HEIGHT-1 == i) || (i == 0) || (j == 0) || (BOARD_WIDTH-1 == j) ){
@@ -25,7 +28,6 @@ void setup_board(struct Display *disp){
  }
 }
 
-//TODO: MAKE THIS WORK
 void setup_high(struct Display *disp, char high){
     char i,j, number, checksum;
 
@@ -50,6 +52,27 @@ void setup_high(struct Display *disp, char high){
     }
 }
 
+void setup_game(struct Display *disp,char *mode,char **labels, int *values){
+    generate_block(&(disp -> current_block),new_color());
+    generate_block(&(disp -> next_block),new_color());
+    setup_board(disp);
+
+    int setup_x = 280, setup_y = 20;
+
+    char i;
+
+    for (i = 0; i< 3; i++){
+        disp -> stats[i].x = setup_x;
+        disp -> stats[i].y = setup_y + 80*i;
+        disp -> stats[i].value = *values; 
+        disp -> stats[i].label = labels[i];
+        values++;
+    }
+
+    if (strcmp(mode,"B") == 0)
+        setup_high(disp,*(values-2));
+}
+
 void place_block(struct Display *disp){
     char i,j;
 
@@ -63,7 +86,7 @@ void place_block(struct Display *disp){
     }
 }
 
-//TODO: better random generator that allows only 2 blocks in the row
+//TODO: better random generator that allows only 2 blocks in the row (sorta fixed)
 void push_next_block(struct Display *disp){
     char i,j;
 
@@ -77,7 +100,6 @@ void push_next_block(struct Display *disp){
     generate_block(&(disp -> next_block),new_color());
 }
 
-//TODO: collision for rotate and reversed blocks
 char detect_collision(struct Display *disp, int dx, int dy){
     int i,j;
 
@@ -164,4 +186,33 @@ char is_game_over(struct Display *disp){
     char start_collision = detect_collision(disp,0,0);
 
     return start_collision;
+}
+
+void move(struct Display *disp, int keycode){
+        if (keycode == ALLEGRO_KEY_SPACE)
+            reverse_with_collision(disp);
+
+        if (keycode == ALLEGRO_KEY_Z)
+            rotate_with_collision(disp,0);
+
+        if (keycode == ALLEGRO_KEY_X)
+            rotate_with_collision(disp,1);
+}
+
+void move_horizontally(struct Display *disp, char direction){
+
+    if (detect_collision(disp,direction,0) == 0)
+        disp -> current_block.x = disp -> current_block.x + direction;
+}
+
+char move_down(struct Display *disp){
+    if (detect_collision(disp,0,1) == 0) {
+        (disp -> current_block.y)++;
+        return 1;
+    }
+    else {
+        place_block(disp);
+        push_next_block(disp);
+        return 0;
+    }
 }

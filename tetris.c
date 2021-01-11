@@ -6,7 +6,7 @@
  * This file is the main file for the tetris game.
  *
  * [NOTE] in order to compile it using unix commands, you have to use a flag:
- * $(pkg-config allegro-5 allegro_font-5 allegro_image-5 allegro_primitives-5 --libs --cflags)
+ * $(pkg-config allegro-5 allegro_font-5 allegro_ttf-5 allegro_image-5 allegro_primitives-5 --libs --cflags)
  */
 
 #include "board.c"
@@ -14,60 +14,61 @@
 #include "color.c"
 #include "core.c"
 #include "gamemodes.c"
-#include <string.h>
 
 int main(int argc, char *argv[]){
+
+    must_init(al_init(), "allegro");
+    must_init(al_install_keyboard(), "keyboard");
+    must_init(al_init_image_addon(), "image addon");
+    must_init(al_init_font_addon(), "font addon");
+    must_init(al_init_ttf_addon(), "font addon");
+
+    ALLEGRO_DISPLAY* disp = al_create_display(400, 400);
+    must_init(disp, "display");
 
     srand(time(NULL));
 
     //TODO: IMPLEMENT DIFFERENT GENERATOR ALGORITHMS
     switch (argc){
         /* no arguments 
-         * [PLAYS THE TITTLE SCREEN]
+         * [PLAYS GAME A]
          */
         case 1:
-            //tittle_screen();
-            gameA(1,0); //placeholrder
+            gameA(disp,0);
             break;
         /* 1 argument 
-         * [PLAYS THE CHOSEN GAMEMODE MENU OR CREDITS]
+         * [PLAYS THE CHOSEN GAMEMODE WITH DEFAULT ARGUMENTS]
          */
         case 2: 
             if (strcmp(argv[1],"A") == 0)
-                gameA(1,0);
+                gameA(disp,0);
             else if (strcmp(argv[1],"B") == 0)
-                gameB(1,0,0);
-            //else play the credits
+                gameB(disp,0,0);
             break;
         /* 3 arguments 
-         *[PLAYS GAME A WITH GIVEN ARGUMENTS AND WITHOUT CHOOSING THE GENERATOR ALGORITHM] 
+         *[PLAYS GAME A WITH GIVEN ARGUMENTS] 
          */
-        case 4:
+        case 3:
             if (strcmp(argv[1],"A") == 0){
-                char song = atoi(argv[2]), level = atoi(argv[3]);
-                gameA(song,level);
+                char level = atoi(argv[2]);
+                gameA(disp,level);
             }
             break;
         /* 4 arguments 
-         *[PLAYS GAME B WITH GIVEN ARGUMENTS AND WITHOUT CHOOSING THE GENERATOR ALGORITHM] 
-         * or
-         *[PLAYS GAME A WITH GIVEN ARGUMENTS AND WITH CHOOSING THE GENERATOR ALGORITHM] 
+         *[PLAYS GAME B WITH GIVEN ARGUMENTS] 
          */
-        case 5:
+        case 4:
             if (strcmp(argv[1],"B") == 0){
-                char song = atoi(argv[2]), level = atoi(argv[3]), high = atoi(argv[4]);
-                gameB(song,level,high);
+                char level = atoi(argv[2]), high = atoi(argv[3]);
+                gameB(disp,level,high);
             }
-            break;
-        /* 5 arguments
-         *[PLAYS GAME B WITH GIVEN ARGUMENTS AND WITH CHOOSING THE GENERATOR ALGORITHM] 
-         */
-        case 6:
             break;
         default:
             printf("ERROR! INCORRECT NUMBER OF ARGUMENTS!\n");
             return 2;
         }
+
+    al_destroy_display(disp);
 
     return 0;
 }

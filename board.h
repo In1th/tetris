@@ -12,6 +12,7 @@
 #define UI_H
 
 #include "block.h"
+#include <string.h>
 
 #define BOARD_HEIGHT 22
 #define BOARD_WIDTH 14
@@ -73,18 +74,15 @@ void draw_board(struct Display *disp);
  *
  * param: *stat - pointer to a Statistics struct
  */
-void draw_statistic(struct Statistics *stat);
+void draw_statistic(struct Statistics *stat,char is_score);
+
+void draw_screen(struct Display *disp, char is_game_over);
 
 //[TODO] EVERY FUNCTION BELOW WITH NEEDED STRUCTS AND ARGUMENTS
 
-void draw_tittle_screen();
+void draw_border(struct Display *disp);
+void draw_game_over_A(struct Display *disp);
 
-void draw_menu_A();
-
-void draw_menu_B();
-
-void draw_game_over_A();
-
-void draw_game_over_B();
+void draw_game_over_B(struct Display *disp,int *lines, char success);
 
 #endif

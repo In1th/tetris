@@ -18,6 +18,7 @@
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_ttf.h>
 
 #include "block.h"
 #include "board.h"
@@ -50,7 +51,7 @@ void menuB();
  * param: music - music variable of the track that has to be played
  * param: start_level - selected starting level <0,9>
  */
-void gameA(char music, char start_level);
+void gameA(ALLEGRO_DISPLAY* disp,char start_level);
 
 /* That funciton operates the gameB
  * 
@@ -58,13 +59,13 @@ void gameA(char music, char start_level);
  * param: start_level - selected starting level <0,9>
  * param: high - number of random blocks at the start of the game <0,5>
  */
-void gameB(char music, char start_level, char high);
+void gameB(ALLEGRO_DISPLAY* disp, char start_level, char high);
 
 /* That function operates the Game Over screen for gameA
  *
  * param: *display - pointer to the struct Display containing all required display info
  */
-void gameOverA(ALLEGRO_EVENT_QUEUE* queue, struct Display *display);
+void gameOverA(ALLEGRO_DISPLAY* disp,struct Display *display);
 
 /* That function operates the Game Over screen for gameA
  *
@@ -72,10 +73,5 @@ void gameOverA(ALLEGRO_EVENT_QUEUE* queue, struct Display *display);
  * param: *lines_count - pointer to the start of the array containing how many lines have been cleared, sorted by the number of lines cleared at the same time
  */
 void gameOverB(struct Display *display, char *lines_count);
-
-/* That function displays credits. Indefinitley
- *
- */
-void credits();
 
 #endif

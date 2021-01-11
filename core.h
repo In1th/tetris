@@ -22,6 +22,8 @@ void setup_board(struct Display *disp);
 
 void setup_high(struct Display *disp, char high);
 
+void setup_game(struct Display *disp,char *mode, char **labels, int values[3]);
+
 /* places fallen block on board
  *
  * param: *disp - pointer to a Display struct
@@ -78,5 +80,9 @@ char check_for_lines(struct Display *disp);
  * returns: true (1) or false (0) value for game over condition
  */
 char is_game_over(struct Display *disp);
+
+void move(struct Display *disp, int keycode);
+void move_horizontally(struct Display *disp, char direction);
+char move_down(struct Display *disp);
 
 #endif
